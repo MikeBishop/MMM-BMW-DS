@@ -142,29 +142,26 @@ Module.register("MMM-BMW-DS", {
         // daily names, high/low and icons
         var daily = document.createElement("div");
         daily.classList.add("small", "bright", "daily");
-        daily.innerHTML = this.config.tempUnits != "C" ? /* ? shorthand if statement */
 
-            moment.unix(forecast.daily.data[0].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[0].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[0].temperatureHigh) + "/" + Math.round(forecast.daily.data[0].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[1].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[1].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[1].temperatureHigh) + "/" + Math.round(forecast.daily.data[1].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[2].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[2].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[2].temperatureHigh) + "/" + Math.round(forecast.daily.data[2].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[3].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[3].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[3].temperatureHigh) + "/" + Math.round(forecast.daily.data[3].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[4].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[4].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[4].temperatureHigh) + "/" + Math.round(forecast.daily.data[4].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[5].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[5].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[5].temperatureHigh) + "/" + Math.round(forecast.daily.data[5].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[6].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[6].icon + ".png>" + " &nbsp" + Math.round(forecast.daily.data[6].temperatureHigh) + "/" + Math.round(forecast.daily.data[6].temperatureLow) + " &nbsp &nbsp  &nbsp &nbsp &nbsp"
+        for( let i = 0; i < 7; i++ ) {
+            var day = document.createElement("div");
+            day.classList.add("day");
+            let high = forecast.daily.data[i].temperatureHigh;
+            let low = forecast.daily.data[0].temperatureLow;
 
-            :
-            /* :  shorthand else */
+            if( this.config.tempUnits == "C" ) {
+                high = to_celcius(high);
+                low = to_celcius(low);
+            }
 
-            moment.unix(forecast.daily.data[0].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[0].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[0].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[0].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[1].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[1].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[1].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[1].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[2].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[2].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[2].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[2].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[3].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[3].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[3].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[3].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[4].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[4].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[4].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[4].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[5].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[5].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[5].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[5].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp" +
-            moment.unix(forecast.daily.data[6].time).local().format('ddd') + " &nbsp" + "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[6].icon + ".png>" + " &nbsp" + Math.round(to_celcius(forecast.daily.data[6].temperatureHigh)) + "/" + Math.round(to_celcius(forecast.daily.data[6].temperatureLow)) + " &nbsp &nbsp  &nbsp &nbsp &nbsp"
+            day.innerHTML = "&nbsp" +
+                moment.unix(forecast.daily.data[i].time).local().format('ddd') + " &nbsp" +
+                "<img class = image src=./modules/MMM-BMW-DS/icons/" + forecast.daily.data[i].icon +
+                ".png>" + "&nbsp&nbsp" + Math.round(high) + "/" + Math.round(low) + "&nbsp";
+            daily.appendChild(day);
+        }
+
             wrapper.appendChild(daily);
-
-
 
                 // Sound for rain, wind, thunder, etc.
                 if (forecast.hourly.data[0].icon == "rain" && this.config.playSounds == "yes"){
